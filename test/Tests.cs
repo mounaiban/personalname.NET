@@ -1,6 +1,7 @@
 namespace test;
 
 using System.Text;
+using Newtonsoft.Json;
 using personalname;
 
 public static class StringHelper
@@ -25,8 +26,25 @@ public static class StringHelper
     }
 }
 
+public static class TestExceptions
+{
+    public static readonly Dictionary<string,Exception> exceptions = new Dictionary<string, Exception>()
+    {
+        {"any", new Exception()},
+        {"arithmetic", new ArithmeticException()},
+        {"index", new IndexOutOfRangeException()},
+        {"key", new KeyNotFoundException()},
+        {"type", new Exception("Unexpected Type")},
+        {"value", new Exception("Invalid Value")},
+    };
+     // TODO: what's the C# equivalent of Python's TypeError?
+     // I don't think there is any due to C#'s type strictness
+     // where errors of type are complier, not runtime errors.
+}
+
 public class Tests
 {
+    /* Self Tests */
     [Fact]
     public void ToCSharpStyleNameTests()
     {
@@ -43,8 +61,9 @@ public class Tests
         }
     }
 
+    /* PNTK Tests */
     [Fact]
-    public void Test1()
+    public void PersonalNameTests()
     {
     }
 }
