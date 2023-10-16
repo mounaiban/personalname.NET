@@ -1,7 +1,9 @@
 namespace test;
 
+using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using personalname;
 
 public static class StringHelper
@@ -65,5 +67,24 @@ public class Tests
     [Fact]
     public void PersonalNameTests()
     {
+    }
+
+    /* Figuring out how JSON.NET works */
+    [Fact]
+    public void ReadTestDataTest()
+    {
+        string testfile = "PersonalName.json";
+        using (StreamReader srf = new StreamReader(testfile))
+        {
+            JObject jo = JObject.Parse(srf.ReadToEnd());
+            Console.WriteLine($"Test Suite: {(string)jo.SelectToken("name")}");
+            JToken tests = jo.SelectToken("tests");
+            int i = 1;
+            foreach(JToken j in tests.Children())
+            {
+                Console.WriteLine($"{i}: {j.Path}");
+                i++;
+            }
+        }
     }
 }
